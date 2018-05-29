@@ -20,6 +20,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails', '~> 4.3.3'
 gem 'coffee-rails', '~> 4.2'
+gem 'slim-rails', '~> 3.1.3'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
