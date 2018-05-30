@@ -1,0 +1,9 @@
+.row
+  .col-md-9
+    h1 Object Status Check:
+    .well
+      = bootstrap_form_with url: statuses_path, method: :get, local: true do |form|
+        = form.select :object_type, @object_types
+        = form.number_field :object_id, required: true
+        = form.text_field :timestamp, required: true
+        = form.submit "Submit", class: 'btn btn-primary'
