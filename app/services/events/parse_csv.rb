@@ -16,9 +16,12 @@ module Events
           create_event(line)
         end
 
+        return SuccessfulOperation.new
       rescue JSON::ParserError
         raise ActiveRecord::Rollback
       end
+
+      GradeteckoError.new
     end
 
     private
