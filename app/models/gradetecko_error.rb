@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class GraeteckoError < StandardError
+class GradeteckoError < StandardError
   def valid?
     false
   end
