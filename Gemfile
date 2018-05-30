@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 ruby '2.5.1'
 
@@ -18,6 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'bootstrap', '~> 4.1.1'
+gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/bootstrap_form.git', branch: 'master'
 gem 'jquery-rails', '~> 4.3.3'
 gem 'coffee-rails', '~> 4.2'
 gem 'slim-rails', '~> 3.1.3'
