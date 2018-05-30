@@ -1,0 +1,7 @@
+.row
+  .col-md-9
+    h1 Upload a CSV:
+    .well
+      = form_with url: events_path do |form|
+        = form.file_field :events, value: 'Upload CSV'
+        = form.submit "Submit", class: 'btn btn-primary'
