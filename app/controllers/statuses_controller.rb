@@ -2,15 +2,17 @@
 
 class StatusesController < ApplicationController
   def index
-    object_status = Events::CheckStatus.new(
-      object_status_params
-    ).call
+    if params[:object_id]
+      object_status = Events::CheckStatus.new(
+        object_status_params
+      ).call
 
-    flash[:success] = if object_status.present?
-                        object_status.to_s
-                      else
-                        "Object didn't exist at that time."
-                      end
+      flash[:success] = if object_status.present?
+                          object_status.to_s
+                        else
+                          "Object didn't exist at that time."
+                        end
+    end
 
     @object_types = %w[Order Product Invoice].freeze
   end
