@@ -13,6 +13,13 @@ module Events
         expect(Event.count).to eq(7)
         expect(result).to be_valid
       end
+
+      it 'performance: one query only to insert everything' do
+        csv_path = './spec/fixtures/example.csv'
+
+        expect { described_class.new(csv_path: csv_path).call }
+          .to make_database_queries(count: 1, manipulative: true)
+      end
     end
 
     context 'error in parsing' do

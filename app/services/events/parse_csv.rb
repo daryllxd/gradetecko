@@ -6,15 +6,20 @@ module Events
   class ParseCsv
     attr_reader :csv_path
 
+    EVENT_COLUMNS = %w[object_id object_type timestamp payload].freeze
+
     def initialize(csv_path:)
       @csv_path = csv_path
     end
 
     def call
       ApplicationRecord.transaction do
+        events_to_import = []
         File.foreach(csv_path) do |line|
-          create_event(line)
+          events_to_import << event_params_from_line(line)
         end
+
+        Event.import(EVENT_COLUMNS, events_to_import, validate: true)
 
         return SuccessfulOperation.new
       rescue JSON::ParserError
@@ -26,15 +31,10 @@ module Events
 
     private
 
-    def create_event(line)
+    def event_params_from_line(line)
       object_id, object_type, timestamp, *payload = line.split(',')
 
-      Event.create!(
-        object_id: object_id,
-        object_type: object_type,
-        timestamp: Time.at(timestamp.to_i),
-        payload: fix_payload(payload)
-      )
+      [object_id, object_type, Time.at(timestamp.to_i), fix_payload(payload)]
     end
 
     def fix_payload(payload)
