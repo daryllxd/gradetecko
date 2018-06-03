@@ -13,7 +13,7 @@ def create_sample_database
   ]
 
   sample_database.each do |(object_id, object_type, timestamp, payload)|
-    create(:event, object_id: object_id, object_type: object_type, timestamp: Time.at(timestamp.to_i), payload: JSON.parse(payload))
+    Event.create(object_id: object_id, object_type: object_type, timestamp: Time.at(timestamp.to_i), payload: JSON.parse(payload))
   end
 end
 # rubocop:enable Style/NumericLiterals, Style/StringLiterals, Metrics/LineLength, Metrics/MethodLength
