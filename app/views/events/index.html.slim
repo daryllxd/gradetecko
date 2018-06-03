@@ -3,5 +3,5 @@
     h1 Upload a CSV:
     .well
       = bootstrap_form_with url: events_path do |form|
-        = form.file_field :events, value: 'Upload CSV'
+        = form.file_field :events, id: :events_csv, name: 'events_csv', value: 'Upload CSV'
         = form.submit "Submit", class: 'btn btn-primary'
