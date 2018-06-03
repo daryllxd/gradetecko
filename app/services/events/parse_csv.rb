@@ -13,6 +13,8 @@ module Events
     end
 
     def call
+      return GradeteckoError.new unless csv_file?
+
       ApplicationRecord.transaction do
         events_to_import = []
         File.foreach(csv_path) do |line|
@@ -30,6 +32,10 @@ module Events
     end
 
     private
+
+    def csv_file?
+      Rack::Mime.mime_type(File.extname(csv_path)) == 'text/csv'
+    end
 
     def event_params_from_line(line)
       object_id, object_type, timestamp, *payload = line.split(',')
