@@ -1,24 +1,14 @@
-# README
+<img align="right" width="200" src="https://vignette.wikia.nocookie.net/project-pokemon/images/3/33/250px-252Treecko.png/revision/latest?cb=20160917051000">
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Grade Tecko
 
-Things you may want to cover:
+- Exam for "TG company".
+- Setup: `bundle exec rake db:create db:migrate`
+- CSV files can be found in `spec/fixtures/example.csv`.
+- To run the tests: `bundle exec rspec spec`
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- TODO:
+  - Check if you have to normalize on Object Type.
+  - See if you can store state/snapshot in addition to the events.
+  - Add strong params or do dry-validation.
+  - Possibly check out turbolinks or anything to speed up retrieving part.
