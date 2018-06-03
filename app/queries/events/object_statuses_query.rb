@@ -15,6 +15,9 @@ module Events
         'object_id = ? AND object_type = ? AND timestamp <= ?',
         object_id, object_type, Time.at(timestamp)
       ).order('timestamp ASC')
+    rescue TypeError
+      # Catches nil and unparseable timestamps
+      Event.none
     end
   end
 end

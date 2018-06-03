@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-# rubocop:disable Style/NumericLiterals
+# rubocop:disable Style/NumericLiterals, Metrics/BlockLength
 module Events
   RSpec.describe ObjectStatusesQuery do
     context 'happy path' do
@@ -23,6 +23,29 @@ module Events
         end
       end
     end
+
+    context 'errors' do
+      context 'timestamp is nil' do
+        it 'returns an empty AR relation' do
+          queried_events = described_class.new(
+            object_id: nil, object_type: nil, timestamp: nil
+          ).call
+
+          expect(queried_events).to be_a_kind_of(ActiveRecord::Relation)
+          expect(queried_events).to be_empty
+        end
+      end
+      context 'timestamp is unparseable' do
+        it 'returns an empty AR relation' do
+          queried_events = described_class.new(
+            object_id: nil, object_type: nil, timestamp: 'what'
+          ).call
+
+          expect(queried_events).to be_a_kind_of(ActiveRecord::Relation)
+          expect(queried_events).to be_empty
+        end
+      end
+    end
   end
 end
-# rubocop:enable Style/NumericLiterals
+# rubocop:enable Style/NumericLiterals, Metrics/BlockLength
