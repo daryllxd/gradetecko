@@ -2,7 +2,7 @@
 
 class StatusesController < ApplicationController
   def index
-    if params[:object_id]
+    if params[:object_id].present?
       object_status = Events::CheckStatus.new(
         object_status_params
       ).call
