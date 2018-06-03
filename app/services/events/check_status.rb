@@ -11,15 +11,21 @@ module Events
     end
 
     def call
-      events = Events::ObjectStatusesQuery.new(
-        object_id: object_id,
-        object_type: object_type,
-        timestamp: timestamp
-      ).call
+      return {} if events.empty?
 
       events.each_with_object({}) do |current_event, accumulator|
         accumulator.merge!(current_event.payload)
       end
+    end
+
+    private
+
+    def events
+      Events::ObjectStatusesQuery.new(
+        object_id: object_id,
+        object_type: object_type,
+        timestamp: timestamp
+      ).call
     end
   end
 end

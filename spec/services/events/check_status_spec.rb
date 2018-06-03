@@ -49,6 +49,16 @@ module Events
         )
       end
     end
+
+    context 'errors' do
+      it 'no events found: return an empty hash' do
+        state = described_class.new(
+          object_id: nil, object_type: nil, timestamp: nil
+        ).call
+
+        expect(state).to eq({})
+      end
+    end
   end
 end
 # rubocop:enable Style/NumericLiterals, Metrics/BlockLength
