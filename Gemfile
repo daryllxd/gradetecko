@@ -43,7 +43,7 @@ group :development, :test do
   gem 'bullet', '5.7.5'
   gem 'clipboard'
   gem 'codeclimate-test-reporter', require: false
-  gem 'factory_bot_rails'
+  gem 'factory_bot_rails', '~> 4.10.0'
   gem 'faker'
   gem 'rspec', '3.7.0'
   gem 'rspec-rails'
@@ -72,6 +72,7 @@ end
 
 group :test do
   gem 'aruba', '0.14.2'
+  gem 'capybara', '~> 3.2'
   gem 'colorize'
   gem 'database_cleaner', '~> 1.6.2'
   gem 'db-query-matchers'
