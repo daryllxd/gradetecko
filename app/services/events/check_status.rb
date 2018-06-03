@@ -11,10 +11,11 @@ module Events
     end
 
     def call
-      events = Event.where(
-        'object_id = ? AND object_type = ? AND timestamp <= ?',
-        object_id, object_type, Time.at(timestamp)
-      ).order('timestamp ASC')
+      events = Events::ObjectStatusesQuery.new(
+        object_id: object_id,
+        object_type: object_type,
+        timestamp: timestamp
+      ).call
 
       events.each_with_object({}) do |current_event, accumulator|
         accumulator.merge!(current_event.payload)

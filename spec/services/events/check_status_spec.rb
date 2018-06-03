@@ -8,10 +8,9 @@ module Events
     context 'happy path' do
       # Just seed the database once to save test execution time, we're querying
       # the same parsed CSV anyway
-      before(:all) do
-        create_sample_database
-      end
+      before(:all) { create_sample_database }
       after(:all) { Event.destroy_all }
+
       let!(:object_params) { { object_id: 1, object_type: 'Order' } }
 
       it 'timestamp is before any event has happened - return an empty hash' do
