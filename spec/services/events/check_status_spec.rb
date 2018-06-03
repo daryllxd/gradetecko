@@ -9,8 +9,7 @@ module Events
       # Just seed the database once to save test execution time, we're querying
       # the same parsed CSV anyway
       before(:all) do
-        csv_path = './spec/fixtures/example.csv'
-        Events::ParseCsv.new(csv_path: csv_path).call
+        create_sample_database
       end
       after(:all) { Event.destroy_all }
       let!(:object_params) { { object_id: 1, object_type: 'Order' } }
