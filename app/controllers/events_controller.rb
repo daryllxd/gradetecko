@@ -5,13 +5,13 @@ class EventsController < ApplicationController
 
   def create
     events = Events::ParseCsv.new(
-      csv_path: params[:events].path
+      csv_path: params[:events_csv].path
     ).call
 
     if events.valid?
-      flash[:success] = "#{params[:events].original_filename} was seeded!"
+      flash[:success] = "#{params[:events_csv].original_filename} was seeded!"
     else
-      flash[:danger] = "Error with seeding #{params[:events].original_filename}."
+      flash[:danger] = "Error with seeding #{params[:events_csv].original_filename}."
     end
 
     redirect_to events_path
@@ -22,7 +22,7 @@ class EventsController < ApplicationController
   private
 
   def ensure_events_csv_exists
-    unless params[:events].present?
+    unless params[:events_csv].present?
       flash[:danger] = 'Nothing was uploaded.'
       redirect_to events_path
     end
