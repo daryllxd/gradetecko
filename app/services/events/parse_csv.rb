@@ -7,6 +7,7 @@ module Events
     attr_reader :csv_path
 
     EVENT_COLUMNS = %w[object_id object_type timestamp payload].freeze
+    POSSIBLE_OBJECT_TYPES = %w[Order Product Invoice].freeze
 
     def initialize(csv_path:)
       @csv_path = csv_path
@@ -21,6 +22,7 @@ module Events
           events_to_import << event_params_from_line(line)
         end
 
+        # Skip AR validations to speed up import
         Event.import(EVENT_COLUMNS, events_to_import, validate: true)
 
         return SuccessfulOperation.new
@@ -40,7 +42,22 @@ module Events
     def event_params_from_line(line)
       object_id, object_type, timestamp, *payload = line.split(',')
 
-      [object_id, object_type, Time.at(timestamp.to_i), fix_payload(payload)]
+      [object_id, validate_type(object_type), validate_timestamp(timestamp), fix_payload(payload)]
+    end
+
+    def validate_type(object_type)
+      raise ActiveRecord::Rollback unless object_type.in?(POSSIBLE_OBJECT_TYPES)
+
+      object_type
+    end
+
+    # Attempt converting the timestamp to an int, just to make sure that
+    def validate_timestamp(timestamp)
+      raise ActiveRecord::Rollback if timestamp.blank?
+
+      Time.at(Integer(timestamp))
+    rescue ArgumentError
+      raise ActiveRecord::Rollback
     end
 
     def fix_payload(payload)
